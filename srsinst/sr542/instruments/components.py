@@ -35,19 +35,16 @@ class Config(Component):
     source = DictCommand('SRCE', SourceDict)
     sync_edge = DictCommand('EDGE', EdgeDict)
     control_target = DictCommand('CTRL', ControlTargetDict)
-    freqeuency = FloatCommand('IFRQ')
+    frequency = FloatCommand('IFRQ')
     phase = FloatCommand('PHAS')
-    relative_phase = FloatGetCommand('RELP')
+    relative_phase = BoolCommand('RELP')
     multiplier = IntCommand('MULT')
     divisor = IntCommand('DIVR')
     vco_frequency = FloatCommand('VCOS')
     
     def jump_to_internal_frequency(self):
-        pass
+        self.comm.send('JINT')
 
-    def set_relative_frequency(self, state=True):
-        pass
-    
     
 class Operate(Component):
     OffOnDict ={
@@ -67,6 +64,12 @@ class Operate(Component):
         Keys.DIFF: 5,
         Keys.CTRL: 6,
     }
+    motor_state = DictCommand('MOTR', OffOnDict)
+    frequency_monitor = DictCommand('MFRQ', FrequencyMonitorDict)
+    slots = IntIndexGetCommand('SLOT', 1, 0, SlotDict)
+
+
+class Setup(Component):
     DisplayDict = {
         Keys.OUTER: 0,
         Keys.INNER: 1,
@@ -77,21 +80,17 @@ class Operate(Component):
         Keys.MULTIN: 6,
         Keys.DIVM: 7,
         Keys.VCOFS: 8
-        
-        
     }
-    motor_state = DictCommand('MOTR', OffOnDict)
-    frequency_monitor = DictCommand('MFRQ', FrequencyMonitorDict)
-    slots = IntIndexGetCommand('SLOT', SlotDict)
+
     display_mode = DictCommand('DISP', DisplayDict)
-    alarm = DictCommand('ALRM', OffOnDict)
-    key_lick = DictCommand('LCLK', OffOnDict)
+    alarm = DictCommand('ALRM', Operate.OffOnDict)
+    key_click = DictCommand('KCLK', Operate.OffOnDict)
     
     def save(self, location):
         self.comm.send('*SAV {}'.format(location))
         
     def recall(self, location):
-        self.comm.send('RCL {}'.format(location))
+        self.comm.send('*RCL {}'.format(location))
         
     def revert(self):
         self.comm.send('BACK')
@@ -101,7 +100,7 @@ class Interface(Component):
     id_string = GetCommand('*IDN')
     operation_complete = BoolGetCommand('*OPC')
     
-    def cancel_peding_operation_complete(self):
+    def cancel_pending_operation_complete(self):
         self.comm.send('COPC')
 
 
@@ -117,7 +116,7 @@ class Status(Component):
         Keys.QYE: 2,
         Keys.DDE: 3,
         Keys.EXE: 4,
-        Keys.CHE: 5,
+        Keys.CME: 5,
         Keys.URQ: 6,
         Keys.PON: 7
     }
