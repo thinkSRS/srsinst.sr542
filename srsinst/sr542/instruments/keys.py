@@ -39,7 +39,7 @@ class Keys:
     QYE = 'Query Error'
     DDE = 'Device Dependent Error'
     EXE = 'Execution Error'
-    CHE = 'Command Error'
+    CME = 'Command Error'
     URQ = 'User Request'
     PON = 'Power On'
 
