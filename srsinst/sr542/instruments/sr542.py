@@ -3,7 +3,7 @@ from srsgui.inst.instrument import Instrument
 from srsgui.inst.communications import SerialInterface
 from srsgui.task.inputs import FindListInput
 
-from .components import Config, Operate, Interface, Status
+from .components import Config, Operate, Setup, Interface, Status
 
 
 class SR542(Instrument):
@@ -23,6 +23,7 @@ class SR542(Instrument):
         super().__init__(interface_type, *args)
         self.config = Config(self)
         self.operate = Operate(self)
+        self.setup = Setup(self)
         self.interface = Interface(self)
         self.status = Status(self)
 

@@ -65,7 +65,7 @@ class Operate(Component):
         Keys.CTRL: 6,
     }
     motor_state = DictCommand('MOTR', OffOnDict)
-    frequency_monitor = DictCommand('MFRQ', FrequencyMonitorDict)
+    frequency_monitor = IndexCommand('MFRQ', 6, 0, FrequencyMonitorDict)
     slots = IntIndexGetCommand('SLOT', 1, 0, SlotDict)
 
 
