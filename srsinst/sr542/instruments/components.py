@@ -15,10 +15,10 @@ from .keys import Keys
 
 class Config(Component):
     SourceDict = {
-        Keys.INT: 0,
+        Keys.INTERNAL: 0,
         Keys.VCO: 1,
         Keys.LINE: 2,
-        Keys.EXT: 3
+        Keys.EXTERNAL: 3
     }
     EdgeDict = {
         Keys.RISE: 0,
@@ -65,8 +65,14 @@ class Operate(Component):
         Keys.CTRL: 6,
     }
     motor_state = DictCommand('MOTR', OffOnDict)
-    frequency_monitor = IndexCommand('MFRQ', 6, 0, FrequencyMonitorDict)
+    frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, FrequencyMonitorDict)
     slots = IntIndexGetCommand('SLOT', 1, 0, SlotDict)
+
+    def run(self):
+        self.motor_state = Keys.ON
+
+    def stop(self):
+        self.motor_state = Keys.OFF
 
 
 class Setup(Component):

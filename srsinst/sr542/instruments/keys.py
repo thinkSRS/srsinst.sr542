@@ -1,10 +1,10 @@
 
 class Keys:
     # Config component
-    INT = 'int'
+    INTERNAL = 'internal'
     VCO = 'vco'
     LINE = 'line'
-    EXT = 'ext'
+    EXTERNAL = 'external'
 
     RISE = 'rise'
     FALL = 'fall'
@@ -23,7 +23,6 @@ class Keys:
     DIFF = 'diff'
     CTRL = 'ctrl'
 
-    INTERNAL = 'internal'
     PHASE = 'phase'
     MULTIN = 'multin'
     DIVM = 'divm'
