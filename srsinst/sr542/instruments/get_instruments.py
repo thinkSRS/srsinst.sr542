@@ -1,5 +1,5 @@
 import logging
-from srsgui.task import Task
+from srsgui import Task
 from .sr542 import SR542
 
 logger = logging.getLogger(__name__)
