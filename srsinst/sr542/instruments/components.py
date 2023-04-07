@@ -35,7 +35,7 @@ class Config(Component):
     source = DictCommand('SRCE', SourceDict)
     sync_edge = DictCommand('EDGE', EdgeDict)
     control_target = DictCommand('CTRL', ControlTargetDict)
-    frequency = FloatCommand('IFRQ')
+    internal_freq = FloatCommand('IFRQ')
     phase = FloatCommand('PHAS')
     relative_phase = BoolCommand('RELP')
     multiplier = IntCommand('MULT')
