@@ -35,7 +35,7 @@ class Config(Component):
     source = DictCommand('SRCE', SourceDict)
     sync_edge = DictCommand('EDGE', EdgeDict)
     control_target = DictCommand('CTRL', ControlTargetDict)
-    frequency = FloatCommand('IFRQ')
+    internal_freq = FloatCommand('IFRQ')
     phase = FloatCommand('PHAS')
     relative_phase = BoolCommand('RELP')
     multiplier = IntCommand('MULT')
@@ -135,6 +135,12 @@ class Status(Component):
         Keys.TMAX: 5
     }
     ChopperEventBitDict = {
+        Keys.MON: 0,
+        Keys.EL: 1,
+        Keys.FL: 2,
+        Keys.PL: 3,
+        Keys.CMAX: 4,
+        Keys.TMAX: 5,
         Keys.ChopperHeadMemoryFail: 6,
         Keys.ChopperHeadDisconnect: 7
     }
@@ -142,28 +148,31 @@ class Status(Component):
     last_error = IntCommand('LERR')
 
     status_byte = IntGetCommand('*STB')
-    status_bit = BoolIndexGetCommand('*STB', 7, 0)
+    status_bit = BoolIndexGetCommand('*STB', 7, 0, SerialPollStatusBitDict)
 
-    status_enable = IntCommand('*SRE')
-    status_enable_bit = BoolIndexCommand('*SRE', 7, 0)
+    status_enable_byte = IntCommand('*SRE')
+    status_enable_bit = BoolIndexCommand('*SRE', 7, 0, SerialPollStatusBitDict)
 
     event_status_byte = IntGetCommand('*ESR')
-    event_status_bit = BoolIndexGetCommand('*ESR', 7, 0)
+    event_status_bit = BoolIndexGetCommand('*ESR', 7, 0, EventStatusBitDict)
 
-    event_enable = IntCommand('*ESE')
-    event_enable_bit = BoolIndexCommand('*ESE', 7, 0)
+    event_enable_byte = IntCommand('*ESE')
+    event_enable_bit = BoolIndexCommand('*ESE', 7, 0, EventStatusBitDict)
 
     chopper_condition_byte = IntGetCommand('CHCR')
-    chopper_condition_bit = BoolGetCommand('CHCR')
+    chopper_condition_bit = BoolIndexGetCommand('CHCR', 5, 0, ChopperConditionBitDict)
 
     chopper_condition_positive_transition_byte = IntCommand('CHPT')
+    chopper_condition_positive_transition_bit = BoolIndexCommand('CHPT', 5, 0, ChopperConditionBitDict)
+
     chopper_condition_negative_transition_byte = IntCommand('CHNT')
+    chopper_condition_negative_transition_bit = BoolIndexCommand('CHNT', 5, 0, ChopperConditionBitDict)
 
     chopper_event_byte = IntGetCommand('CHEV')
-    chopper_event_bit = BoolIndexGetCommand('CHEV', 7, 0)
+    chopper_event_bit = BoolIndexGetCommand('CHEV', 7, 0, ChopperEventBitDict)
 
     chopper_event_enable = IntCommand('CHEN')
-    chopper_event_enable_bit = BoolIndexCommand('CHEN', 7, 0)
+    chopper_event_enable_bit = BoolIndexCommand('CHEN', 7, 0, ChopperEventBitDict)
     
     def clear(self):
         self.comm.send('*CLS')
