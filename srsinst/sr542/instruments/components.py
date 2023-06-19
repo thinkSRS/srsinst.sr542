@@ -1,15 +1,15 @@
 
-from srsgui.inst.component import Component
-from srsgui.inst.commands import Command, GetCommand,\
-                                 BoolCommand, BoolGetCommand,\
-                                 IntCommand, IntGetCommand, IntSetCommand,\
-                                 FloatCommand, FloatSetCommand, FloatGetCommand, \
-                                 DictCommand, DictGetCommand
-from srsgui.inst.indexcommands import IndexCommand, IndexGetCommand, \
-                                      IntIndexCommand, IntIndexGetCommand, \
-                                      BoolIndexCommand, BoolIndexGetCommand,\
-                                      FloatIndexCommand, FloatIndexGetCommand, \
-                                      DictIndexCommand
+from srsgui import Component
+from srsgui import Command, GetCommand,\
+                   BoolCommand, BoolGetCommand,\
+                   IntCommand, IntGetCommand, IntSetCommand,\
+                   FloatCommand, FloatSetCommand, FloatGetCommand, \
+                   DictCommand, DictGetCommand
+from srsgui import IndexCommand, IndexGetCommand, \
+                   IntIndexCommand, IntIndexGetCommand, \
+                   BoolIndexCommand, BoolIndexGetCommand,\
+                   FloatIndexCommand, FloatIndexGetCommand, \
+                   DictIndexCommand
 from .keys import Keys
 
 
