@@ -65,8 +65,11 @@ class Operate(Component):
         Keys.CTRL: 6,
     }
     motor_state = DictCommand('MOTR', OffOnDict)
-    frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, FrequencyMonitorDict)
-    slots = IntIndexGetCommand('SLOT', 1, 0, SlotDict)
+
+    def __init(self, parent):
+        super().__init__(parent)
+        self.frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, Operate.FrequencyMonitorDict)
+        self.slots = IntIndexGetCommand('SLOT', 1, 0, Operate.SlotDict)
 
     def run(self):
         self.motor_state = Keys.ON
@@ -146,34 +149,28 @@ class Status(Component):
     }
 
     last_error = IntCommand('LERR')
-
     status_byte = IntGetCommand('*STB')
-    status_bit = BoolIndexGetCommand('*STB', 7, 0, SerialPollStatusBitDict)
-
     status_enable_byte = IntCommand('*SRE')
-    status_enable_bit = BoolIndexCommand('*SRE', 7, 0, SerialPollStatusBitDict)
-
     event_status_byte = IntGetCommand('*ESR')
-    event_status_bit = BoolIndexGetCommand('*ESR', 7, 0, EventStatusBitDict)
-
     event_enable_byte = IntCommand('*ESE')
-    event_enable_bit = BoolIndexCommand('*ESE', 7, 0, EventStatusBitDict)
-
     chopper_condition_byte = IntGetCommand('CHCR')
-    chopper_condition_bit = BoolIndexGetCommand('CHCR', 5, 0, ChopperConditionBitDict)
-
     chopper_condition_positive_transition_byte = IntCommand('CHPT')
-    chopper_condition_positive_transition_bit = BoolIndexCommand('CHPT', 5, 0, ChopperConditionBitDict)
-
     chopper_condition_negative_transition_byte = IntCommand('CHNT')
-    chopper_condition_negative_transition_bit = BoolIndexCommand('CHNT', 5, 0, ChopperConditionBitDict)
-
     chopper_event_byte = IntGetCommand('CHEV')
-    chopper_event_bit = BoolIndexGetCommand('CHEV', 7, 0, ChopperEventBitDict)
-
     chopper_event_enable = IntCommand('CHEN')
-    chopper_event_enable_bit = BoolIndexCommand('CHEN', 7, 0, ChopperEventBitDict)
-    
+
+    def __init(self, parent):
+        super().__init__(parent)
+        self.status_bit = BoolIndexGetCommand('*STB', 7, 0, Status.SerialPollStatusBitDict)
+        self.status_enable_bit = BoolIndexCommand('*SRE', 7, 0, Status.SerialPollStatusBitDict)
+        self.event_status_bit = BoolIndexGetCommand('*ESR', 7, 0, Status.EventStatusBitDict)
+        self.event_enable_bit = BoolIndexCommand('*ESE', 7, 0, Status.EventStatusBitDict)
+        self.chopper_condition_bit = BoolIndexGetCommand('CHCR', 5, 0, Status.ChopperConditionBitDict)
+        self.chopper_condition_positive_transition_bit = BoolIndexCommand('CHPT', 5, 0, Status.ChopperConditionBitDict)
+        self.chopper_condition_negative_transition_bit = BoolIndexCommand('CHNT', 5, 0, Status.ChopperConditionBitDict)
+        self.chopper_event_bit = BoolIndexGetCommand('CHEV', 7, 0, Status.ChopperEventBitDict)
+        self.chopper_event_enable_bit = BoolIndexCommand('CHEN', 7, 0, Status.ChopperEventBitDict)
+
     def clear(self):
         self.comm.send('*CLS')
 
