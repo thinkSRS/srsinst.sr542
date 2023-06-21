@@ -35,19 +35,19 @@ class Config(Component):
     source = DictCommand('SRCE', SourceDict)
     sync_edge = DictCommand('EDGE', EdgeDict)
     control_target = DictCommand('CTRL', ControlTargetDict)
-    internal_freq = FloatCommand('IFRQ')
-    phase = FloatCommand('PHAS')
+    internal_freq = FloatCommand('IFRQ', 'Hz')
+    phase = FloatCommand('PHAS', '°')
     relative_phase = BoolCommand('RELP')
     multiplier = IntCommand('MULT')
     divisor = IntCommand('DIVR')
-    vco_frequency = FloatCommand('VCOS')
+    vco_frequency = FloatCommand('VCOS', 'Hz')
 
     def jump_to_internal_frequency(self):
         self.comm.send('JINT')
 
 
 class Operate(Component):
-    OffOnDict ={
+    OffOnDict = {
         Keys.OFF: 0,
         Keys.ON:  1
     }
@@ -66,7 +66,7 @@ class Operate(Component):
     }
     motor_state = DictCommand('MOTR', OffOnDict)
 
-    def __init(self, parent):
+    def __init__(self, parent):
         super().__init__(parent)
         self.frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, Operate.FrequencyMonitorDict)
         self.slots = IntIndexGetCommand('SLOT', 1, 0, Operate.SlotDict)
@@ -160,7 +160,7 @@ class Status(Component):
     chopper_event_byte = IntGetCommand('CHEV')
     chopper_event_enable = IntCommand('CHEN')
 
-    def __init(self, parent):
+    def __init__(self, parent):
         super().__init__(parent)
         self.status_bit = BoolIndexGetCommand('*STB', 7, 0, Status.SerialPollStatusBitDict)
         self.status_enable_bit = BoolIndexCommand('*SRE', 7, 0, Status.SerialPollStatusBitDict)
