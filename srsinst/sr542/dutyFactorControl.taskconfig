@@ -1,0 +1,7 @@
+name: Duty Factor Control with Synchronized Choppers
+
+inst: chop1, srsinst.sr542, SR542, serial:com4:115200
+inst: chop2, srsinst.sr542, SR542, serial:com5:115200
+
+task: Duty Factor Control,   srsinst.sr542.tasks.dutyfactorcontrol,	DutyFactorControl 
+
