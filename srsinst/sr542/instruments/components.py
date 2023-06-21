@@ -68,7 +68,7 @@ class Operate(Component):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, Operate.FrequencyMonitorDict)
+        self.frequency_monitor = FloatIndexGetCommand('MFRQ', 6, 0, Operate.FrequencyMonitorDict)
         self.slots = IntIndexGetCommand('SLOT', 1, 0, Operate.SlotDict)
         self.add_parent_to_index_commands()
 
@@ -149,7 +149,8 @@ class Status(Component):
         Keys.ChopperHeadDisconnect: 7
     }
 
-    last_error = IntCommand('LERR')
+    last_error = IntGetCommand('LERR')
+
     status_byte = IntGetCommand('*STB')
     status_enable_byte = IntCommand('*SRE')
     event_status_byte = IntGetCommand('*ESR')
