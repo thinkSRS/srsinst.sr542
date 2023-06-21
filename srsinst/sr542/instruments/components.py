@@ -25,13 +25,13 @@ class Config(Component):
         Keys.FALL: 1,
         Keys.SINE: 2,
     }
-    
+
     ControlTargetDict = {
         Keys.SHAFT: 0,
         Keys.INNER: 1,
         Keys.OUTER: 2
     }
-    
+
     source = DictCommand('SRCE', SourceDict)
     sync_edge = DictCommand('EDGE', EdgeDict)
     control_target = DictCommand('CTRL', ControlTargetDict)
@@ -41,11 +41,11 @@ class Config(Component):
     multiplier = IntCommand('MULT')
     divisor = IntCommand('DIVR')
     vco_frequency = FloatCommand('VCOS')
-    
+
     def jump_to_internal_frequency(self):
         self.comm.send('JINT')
 
-    
+
 class Operate(Component):
     OffOnDict ={
         Keys.OFF: 0,
@@ -70,6 +70,7 @@ class Operate(Component):
         super().__init__(parent)
         self.frequency_monitor = FloatIndexCommand('MFRQ', 6, 0, Operate.FrequencyMonitorDict)
         self.slots = IntIndexGetCommand('SLOT', 1, 0, Operate.SlotDict)
+        self.add_parent_to_index_commands()
 
     def run(self):
         self.motor_state = Keys.ON
@@ -94,13 +95,13 @@ class Setup(Component):
     display_mode = DictCommand('DISP', DisplayDict)
     alarm = DictCommand('ALRM', Operate.OffOnDict)
     key_click = DictCommand('KCLK', Operate.OffOnDict)
-    
+
     def save(self, location):
         self.comm.send('*SAV {}'.format(location))
-        
+
     def recall(self, location):
         self.comm.send('*RCL {}'.format(location))
-        
+
     def revert(self):
         self.comm.send('BACK')
 
@@ -108,7 +109,7 @@ class Setup(Component):
 class Interface(Component):
     id_string = GetCommand('*IDN')
     operation_complete = BoolGetCommand('*OPC')
-    
+
     def cancel_pending_operation_complete(self):
         self.comm.send('COPC')
 
@@ -170,6 +171,7 @@ class Status(Component):
         self.chopper_condition_negative_transition_bit = BoolIndexCommand('CHNT', 5, 0, Status.ChopperConditionBitDict)
         self.chopper_event_bit = BoolIndexGetCommand('CHEV', 7, 0, Status.ChopperEventBitDict)
         self.chopper_event_enable_bit = BoolIndexCommand('CHEN', 7, 0, Status.ChopperEventBitDict)
+        self.add_parent_to_index_commands()
 
     def clear(self):
         self.comm.send('*CLS')
