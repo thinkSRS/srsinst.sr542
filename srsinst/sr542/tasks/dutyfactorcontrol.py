@@ -49,7 +49,7 @@ and the Chopper 2 Ext Sync input is therefore required.
         model, sn, ver = chopper.check_id()
         t_elapsed_s = 0        
         while(True):
-            time.sleep(1.0)            
+            self.delay(1.0)            
             t_elapsed_s += 1.0            
             freq_locked = chopper.status.chopper_condition_bit['FL']
             phase_locked = chopper.status.chopper_condition_bit['PL']
@@ -65,7 +65,7 @@ and the Chopper 2 Ext Sync input is therefore required.
         model, sn, ver = chopper.check_id()
         t_elapsed_s = 0        
         while(True):
-            time.sleep(1.0)            
+            self.delay(1.0)            
             t_elapsed_s += 1.0            
             ext_lock = chopper.status.chopper_condition_bit['EL']            
             if ext_lock:
