@@ -1,3 +1,7 @@
+##! 
+##! Copyright(c) 2023 Stanford Research Systems, All rights reserved
+##! Subject to the MIT License
+##! 
 
 from srsgui.inst.instrument import Instrument
 from srsgui.inst.communications import SerialInterface
