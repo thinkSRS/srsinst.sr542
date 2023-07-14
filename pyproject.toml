@@ -35,5 +35,9 @@ version = {attr = "srsinst.sr542.__version__"}
 [project.optional-dependencies]
 full = ['matplotlib>=3.6.2', 'pyside6']
 
+[project.urls]
+homepage = "https://github.com/thinkSRS/srsinst.sr542"
+repository = "https://github.com/thinkSRS/srsinst.sr542.git"
+
 [project.scripts]
 sr542 = "srsinst.sr542.__main__:main"
